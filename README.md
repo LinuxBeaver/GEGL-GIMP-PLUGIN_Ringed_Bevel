@@ -1,4 +1,4 @@
-Ring Bevel Gimp plugin
+## Ring Bevel Gimp plugin
 works in both Gimp 2.10 and Gimp 2.99
 
 ![image preview](images/2.png)
