@@ -80,7 +80,7 @@ property_int  (ringsize, _("Ring size"), 6)
   value_range (4, 9)
   ui_range    (4, 9)
   ui_meta     ("unit", "pixel-distance")
-  description (_("Control the size of the rings"))
+  description (_("Control the size of the rings. This also creates gaps when bottom bevel's opacity is low."))
 
 
 property_double (azimuth, _("Azimuth of the bevel"), 67.0)
@@ -120,6 +120,11 @@ enum_start (under_bevel_blend_mode)
   enum_value (GEGL_BLEND_MODE_TYPE_ADDITION,      "Addition",
               N_("Addition"))
 enum_end (underbevelblendmode)
+
+property_double (bottombevelopacity, _("Opacity of the bottom bevel."), 1.0)
+    description (_("Opacity of the bottom bevel. 0 disables it entirely"))
+    value_range (0.0, 1.0)
+
 
 property_enum (blendbevel, _("Under bevel blend mode"),
     underbevelblendmode, under_bevel_blend_mode,
@@ -221,7 +226,8 @@ typedef struct
  GeglNode *color;
  GeglNode *image;
  GeglNode *idrefimage;
- GeglNode *multiply;    
+ GeglNode *multiply;
+ GeglNode *bevelopacity;     
  GeglNode *output;
 }State;
 
@@ -239,6 +245,10 @@ static void attach (GeglOperation *operation)
 
   state->image = gegl_node_new_child (gegl,
                                   "operation", "gegl:layer", 
+                                  NULL);
+
+  state->bevelopacity = gegl_node_new_child (gegl,
+                                  "operation", "gegl:opacity", 
                                   NULL);
 
   state->idrefimage = gegl_node_new_child (gegl,
@@ -359,6 +369,9 @@ static void attach (GeglOperation *operation)
 /*Image upload option*/
     gegl_operation_meta_redirect (operation, "imageupload", state->image, "src");
 
+/*Disable bottom bevel (bevel 2)*/
+    gegl_operation_meta_redirect (operation, "bottombevelopacity", state->bevelopacity, "value");
+
 /*Let's analysis what is going on below
 
 The same idref is called 3 times. The first is a bookmark (the id=bookmark) the second is a (ref=bookmark) inside the erase blend mode. THe third is a (ref=bookmark) inside the behind blend mode. 
@@ -403,8 +416,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind,  state->idrefimage, state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -412,8 +425,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->color, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel,  state->behind, state->idrefimage, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -421,8 +434,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -430,8 +443,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel,  state->behind,  state->idrefimage, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3, state->s4,  state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
 
@@ -445,8 +458,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind, state->idrefimage, state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -454,8 +467,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel, state->behind,  state->idrefimage, state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -463,8 +476,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
@@ -472,8 +485,8 @@ switch (o->rings) {
   gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3, state->s4,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
-  gegl_node_link_many (state->idref, state->bevel2,   NULL);
-  gegl_node_connect_from (state->behind, "aux", state->bevel2, "output");
+  gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
+  gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
   gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
 
