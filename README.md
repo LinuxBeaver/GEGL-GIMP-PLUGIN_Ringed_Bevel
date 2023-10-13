@@ -5,8 +5,9 @@ works in both Gimp 2.10 and Gimp 2.99
 
 ![image preview](images/6.png)
 
+**With an image file upload**
 ![image preview](images/5.png)
-In the folder "images" their is the image file sand.png that this calls.
+In the folder "images" their is the image file sand.png that this can recreate this.
 Remember, to make text while or grayscale before uploading an image file.
 
 ## Directory to put Binaries (They do NOT go in the normal plugins folder)
