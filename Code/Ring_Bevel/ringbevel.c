@@ -413,39 +413,35 @@ if (o->colormode)
 switch (o->rings) {
         break;
     case onering:
-  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind,  state->idrefimage, state->multiply,  state->output, NULL);
+  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind,   state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case tworings:
-  gegl_node_link_many (state->input, state->color, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel,  state->behind, state->idrefimage, state->multiply, state->output, NULL);
+  gegl_node_link_many (state->input, state->color, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel,  state->behind, state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case threerings:
-  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
+  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind,  state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case fourrings:
-  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel,  state->behind,  state->idrefimage, state->multiply, state->output, NULL);
+  gegl_node_link_many (state->input, state->color, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel,  state->behind,   state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3, state->s4,  state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
 
     }
@@ -455,39 +451,35 @@ else
 switch (o->rings) {
         break;
     case onering:
-  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind, state->idrefimage, state->multiply,  state->output, NULL);
+  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind,  state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case tworings:
-  gegl_node_link_many (state->input, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel, state->behind,  state->idrefimage, state->multiply,  state->output, NULL);
+  gegl_node_link_many (state->input, state->mediandictator,  state->levels, state->idref, state->erase, state->bevel, state->behind, state->multiply,  state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case threerings:
-  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
+  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind,  state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
         break;
     case fourrings:
-  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind, state->idrefimage, state->multiply, state->output, NULL);
+  gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,   state->bevel, state->behind,  state->multiply, state->output, NULL);
   gegl_node_link_many (state->idref, state->median, state->s1, state->s2, state->s3, state->s4,   state->fix, NULL);
   gegl_node_connect_from (state->erase, "aux", state->fix, "output");
   gegl_node_link_many (state->idref, state->bevel2, state->bevelopacity,   NULL);
   gegl_node_connect_from (state->behind, "aux", state->bevelopacity, "output");
-  gegl_node_link_many (state->idrefimage, state->image,   NULL);
   gegl_node_connect_from (state->multiply, "aux", state->image, "output");
 
 
