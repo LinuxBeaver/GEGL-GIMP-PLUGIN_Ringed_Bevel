@@ -25,7 +25,7 @@ Remember, to make text while or grayscale before uploading an image file.
  /home/(USERNAME)/.var/app/org.gimp.GIMP/data/gegl-0.4/plug-ins
 
 Then Restart Gimp and go to GEGL Operations and look for "Ring Bevel" in the drop down list
-Gimp 2.99.16+ users will find the filter in Filters>Text Ttyling>Ringed Bevel. 2.10 
+Gimp 2.99.16+ users will find the filter in Filters>Text Styling>Ringed Bevel. 2.10 
 users will only see it in the GEGL operations drop down list.
 
 
