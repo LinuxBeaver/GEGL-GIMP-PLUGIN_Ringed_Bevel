@@ -206,28 +206,28 @@ typedef struct
 {
  GeglNode *input;
  GeglNode *levels;
- GeglNode *erase; 
+ GeglNode *erase;
  GeglNode *s1;
  GeglNode *s2;
  GeglNode *s3;
- GeglNode *s4;   
+ GeglNode *s4;
  GeglNode *nop1;
  GeglNode *nop2;
  GeglNode *nop3;
- GeglNode *nop4;        
+ GeglNode *nop4;
  GeglNode *bevel;
  GeglNode *behind;
  GeglNode *median;
  GeglNode *mediandictator;
- GeglNode *bevel2; 
- GeglNode *over; 
- GeglNode *idref; 
- GeglNode *fix; 
+ GeglNode *bevel2;
+ GeglNode *over;
+ GeglNode *idref;
+ GeglNode *fix;
  GeglNode *color;
  GeglNode *image;
  GeglNode *idrefimage;
  GeglNode *multiply;
- GeglNode *bevelopacity;     
+ GeglNode *bevelopacity;
  GeglNode *output;
 }State;
 
@@ -244,69 +244,69 @@ static void attach (GeglOperation *operation)
   state->output   = gegl_node_get_output_proxy (gegl, "output");
 
   state->image = gegl_node_new_child (gegl,
-                                  "operation", "gegl:layer", 
+                                  "operation", "gegl:layer",
                                   NULL);
 
   state->bevelopacity = gegl_node_new_child (gegl,
-                                  "operation", "gegl:opacity", 
+                                  "operation", "gegl:opacity",
                                   NULL);
 
   state->idrefimage = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->multiply = gegl_node_new_child (gegl,
-                                  "operation", "gegl:multiply", 
+                                  "operation", "gegl:multiply",
                                   NULL);
 
   state->bevel = gegl_node_new_child (gegl,
-                                  "operation", "lb:custom-bevel", "depth", 4.0, "gaus", 1.0, 
+                                  "operation", "lb:custom-bevel", "depth", 4, "gaus", 1.0,
                                   NULL);
 
 
   state->bevel2 = gegl_node_new_child (gegl,
-                                  "operation", "lb:custom-bevel", "depth", 1.0, "gaus", 1.0, 
+                                  "operation", "lb:custom-bevel", "depth", 1, "gaus", 1.0,
                                   NULL);
 
   state->mediandictator = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "alpha-percentile", 100.0,  
+                                  "operation", "gegl:median-blur", "alpha-percentile", 100.0,
                                   NULL);
 
   state->erase = gegl_node_new_child (gegl,
-                                  "operation", "gegl:dst-out", 
+                                  "operation", "gegl:dst-out",
                                   NULL);
 
   state->color = gegl_node_new_child (gegl,
-                                  "operation", "gegl:color-overlay", 
+                                  "operation", "gegl:color-overlay",
                                   NULL);
 
 
   state->behind = gegl_node_new_child (gegl,
-                                  "operation", "gegl:dst-over", 
+                                  "operation", "gegl:dst-over",
                                   NULL);
 
   state->idref = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->nop1 = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->nop2 = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->nop3 = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->nop4 = gegl_node_new_child (gegl,
-                                  "operation", "gegl:nop", 
+                                  "operation", "gegl:nop",
                                   NULL);
 
   state->fix = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "radius", 0, 
+                                  "operation", "gegl:median-blur", "radius", 0,
                                   NULL);
 
   state->levels = gegl_node_new_child (gegl,
@@ -314,24 +314,24 @@ static void attach (GeglOperation *operation)
                                   NULL);
 
   state->s1 = gegl_node_new_child (gegl,
-                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,  
+                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,
                                   NULL);
 
   state->s2 = gegl_node_new_child (gegl,
-                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,  
+                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,
                                   NULL);
 
   state->s3 = gegl_node_new_child (gegl,
-                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,  
+                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,
                                   NULL);
 
   state->s4 = gegl_node_new_child (gegl,
-                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,  
+                                  "operation", "lb:ssg", "radius", 0, "stroke", 7.0,
                                   NULL);
 
 
   state->median = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "radius", 5, "alpha-percentile", 0.0,  
+                                  "operation", "gegl:median-blur", "radius", 5, "alpha-percentile", 0.0,
                                   NULL);
 
 
@@ -374,20 +374,20 @@ static void attach (GeglOperation *operation)
 
 /*Let's analysis what is going on below
 
-The same idref is called 3 times. The first is a bookmark (the id=bookmark) the second is a (ref=bookmark) inside the erase blend mode. THe third is a (ref=bookmark) inside the behind blend mode. 
-Remember. idref is a gegl:nop (no operation). 
+The same idref is called 3 times. The first is a bookmark (the id=bookmark) the second is a (ref=bookmark) inside the erase blend mode. THe third is a (ref=bookmark) inside the behind blend mode.
+Remember. idref is a gegl:nop (no operation).
 
-There are two blend modes being called "erase blend mode" gegl:dst-out, and the behind blend mode and "gegl:dst-over" The blend modes that the bevels call are baked inside custom-bevel's .c file 
+There are two blend modes being called "erase blend mode" gegl:dst-out, and the behind blend mode and "gegl:dst-over" The blend modes that the bevels call are baked inside custom-bevel's .c file
 not this. They are being called by bevel1 and bevel2, but so is every other property name of custom bevel.
 
-Fix is a median blur radius=0 at the end that resets internal values in the graph from a known bug where the drop shadow filter glitches out. median blur at 0 makes 0 changes to an image. 
+Fix is a median blur radius=0 at the end that resets internal values in the graph from a known bug where the drop shadow filter glitches out. median blur at 0 makes 0 changes to an image.
 
 
 This shows all the nodes and composers "erase" and "behind"
   gegl_node_link_many (state->input, state->mediandictator, state->levels, state->idref, state->erase,  state->bevel, state->behind, state->output, NULL);
 
 
-This is the content inside the erase blend mode. Their can be up to 3 more SSGs but this graph only has 1; s1.  
+This is the content inside the erase blend mode. Their can be up to 3 more SSGs but this graph only has 1; s1.
 
   gegl_node_link_many (state->idref, state->median, state->s1, (potentially three other SSGs) state->fix, NULL);
   gegl_node_connect (state->erase, "aux", state->fix, "output");
@@ -400,7 +400,7 @@ This is the content inside the behind blend mode.
 
 */
 
-} 
+}
 
 static void update_graph (GeglOperation *operation)
 {
@@ -408,7 +408,7 @@ static void update_graph (GeglOperation *operation)
   State *state = o->user_data;
   if (!state) return;
 
-if (o->colormode) 
+if (o->colormode)
 
 switch (o->rings) {
         break;
@@ -446,7 +446,7 @@ switch (o->rings) {
 
     }
 
-else 
+else
 
 switch (o->rings) {
         break;
