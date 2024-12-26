@@ -269,7 +269,7 @@ static void attach (GeglOperation *operation)
                                   NULL);
 
   state->mediandictator = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "alpha-percentile", 100.0,
+                                  "operation", "gegl:median-blur", "alpha-percentile", 100.0, "abyss-policy", 0,
                                   NULL);
 
   state->erase = gegl_node_new_child (gegl,
@@ -306,7 +306,7 @@ static void attach (GeglOperation *operation)
                                   NULL);
 
   state->fix = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "radius", 0,
+                                  "operation", "gegl:median-blur", "radius", 0, "abyss-policy", 0,
                                   NULL);
 
   state->levels = gegl_node_new_child (gegl,
@@ -331,7 +331,7 @@ static void attach (GeglOperation *operation)
 
 
   state->median = gegl_node_new_child (gegl,
-                                  "operation", "gegl:median-blur", "radius", 5, "alpha-percentile", 0.0,
+                                  "operation", "gegl:median-blur", "radius", 5, "alpha-percentile", 0.0, "abyss-policy", 0,
                                   NULL);
 
 
